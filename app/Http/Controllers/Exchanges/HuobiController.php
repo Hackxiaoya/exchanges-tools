@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Exchanges;
 
 use Illuminate\Http\Request;
+use App\Services\Exchanges\Huobi\HuobiServices;
 
 class HuobiController extends BaseController
 {
@@ -13,6 +14,8 @@ class HuobiController extends BaseController
      */
     public function index(Request $request)
     {
-        dd($request);
+        $huobi=new HuobiServices($request);
+        
+        $huobi->run();
     }
 }

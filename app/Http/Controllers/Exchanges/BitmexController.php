@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Exchanges;
 
 use Illuminate\Http\Request;
+use App\Services\Exchanges\Bitmex\BitmexServices;
 
 class BitmexController extends BaseController
 {
@@ -13,6 +14,8 @@ class BitmexController extends BaseController
      */
     public function index(Request $request)
     {
-        dd($request->getMethod());
+        $bitmex=new BitmexServices($request);
+        
+        $bitmex->run();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Exchanges;
 
 use Illuminate\Http\Request;
+use App\Services\Exchanges\Okex\OkexServices;
 
 class OkexController extends BaseController
 {
@@ -13,6 +14,8 @@ class OkexController extends BaseController
      */
     public function index(Request $request)
     {
-        dd($request);
+        $okex=new OkexServices($request);
+        
+        $okex->run();
     }
 }
