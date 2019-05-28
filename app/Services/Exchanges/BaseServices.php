@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 class BaseServices
 {
     protected $request;
+    protected $path;
     
     //接口ID
     protected $id;
@@ -13,13 +14,17 @@ class BaseServices
     protected $method;
     //请求交易接口地址
     protected $url;
+    //请求的数据
+    protected $data;
     //交易类型 spot future wasp
     protected $type;
     
     function __construct(Request $request){
         $this->request=$request;
         
-        $this->method=$request->method();
+        $this->method=strtolower($request->method());
+        
+        $this->data=$request->all();
         
         $this->setProtected();
     }
@@ -56,7 +61,10 @@ class BaseServices
         unset($temp[0]);
         unset($temp[1]);
         
+        //记录过滤后的数据
+        $this->path=$temp;
+        
         //组装请求地址
-        $this->url=implode('/', $temp);
+        $this->url='/'.implode('/', $temp);
     }
 }
