@@ -17,9 +17,9 @@ class BitmexController extends BaseController
         $bitmex=new BitmexServices($request);
         
         try {
-            echo json_encode($bitmex->run());
+            return response()->json($bitmex->run());
         }catch (\Exception $e){
-            echo response($e->getMessage().' line:'.$e->getLine(),503);
+            return response($e->getMessage().' line:'.$e->getLine(),503);
         }
     }
 }
