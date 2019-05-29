@@ -24,27 +24,28 @@ class BitmexServices extends BaseServices
     protected function setMap(){
         switch ($this->getAction()){
             case 'announcement':{
-                return [
-                    'get'=>[
-                        '/api/v1/announcement'=>Announcement::get($this->data),
-                        '/api/v1/announcement/urgent'=>Announcement::getUrgent($this->data),
-                    ],
-                ];
+                switch ($this->method){
+                    case 'get':{
+                        if($this->url=='/api/v1/announcement') return Announcement::get($this->data);
+                        if($this->url=='/api/v1/announcement/urgent') return Announcement::getUrgent($this->data);
+                    }
+                }
             }
             case 'apikey':{
-                return [
-                    'get'=>[
-                        '/api/v1/apiKey'=>ApiKey::get($this->data),
-                    ],
-                    'post'=>[
-                        '/api/v1/apiKey'=>ApiKey::post($this->data),
-                        '/api/v1/apiKey/disable'=>ApiKey::postDisable($this->data),
-                        '/api/v1/apiKey/enable'=>ApiKey::postEnable($this->data),
-                    ],
-                    'delete'=>[
-                        '/api/v1/apiKey'=>ApiKey::delete($this->data),
-                    ],
-                ];
+                switch ($this->method){
+                    case 'get':{
+                        if($this->url=='/api/v1/announcement') return Announcement::get($this->data);
+                        if($this->url=='/api/v1/announcement/urgent') return Announcement::getUrgent($this->data);
+                    }
+                    case 'post':{
+                        if($this->url=='/api/v1/apiKey') return ApiKey::post($this->data);
+                        if($this->url=='/api/v1/apiKey/disable') return ApiKey::postDisable($this->data);
+                        if($this->url=='/api/v1/apiKey/enable') return ApiKey::postEnable($this->data);
+                    }
+                    case 'delete':{
+                        if($this->url=='/api/v1/apiKey') return ApiKey::delete($this->data);
+                    }
+                }
             }
             case 'chat':{
                 break;
@@ -71,34 +72,34 @@ class BitmexServices extends BaseServices
                 break;
             }
             case 'order':{
-                return [
-                    'get'=>[
-                        '/api/v1/order'=>Order::get($this->data),
-                    ],
-                    'post'=>[
-                        '/api/v1/order'=>Order::post($this->data),
-                    ],
-                    'put'=>[
-                        '/api/v1/order'=>Order::put($this->data),
-                    ],
-                    'delete'=>[
-                        '/api/v1/order'=>Order::delete($this->data),
-                        '/api/v1/order/all'=>Order::deleteAll($this->data),
-                    ],
-                ];
+                switch ($this->method){
+                    case 'get':{
+                        if($this->url=='/api/v1/order') return Order::get($this->data);
+                    }
+                    case 'post':{
+                        if($this->url=='/api/v1/order') return Order::post($this->data);
+                    }
+                    case 'put':{
+                        if($this->url=='/api/v1/order') return Order::put($this->data);
+                    }
+                    case 'delete':{
+                        if($this->url=='/api/v1/order') return Order::delete($this->data);
+                        if($this->url=='/api/v1/order/all') return Order::deleteAll($this->data);
+                    }
+                }
             }
             case 'orderbook':{
                 break;
             }
             case 'position':{
-                return [
-                    'get'=>[
-                        '/api/v1/position'=>Position::get($this->data),
-                    ],
-                    'post'=>[
-                        '/api/v1/position/leverage'=>Position::postLeverage($this->data),
-                    ],
-                ];
+                switch ($this->method){
+                    case 'get':{
+                        if($this->url=='/api/v1/position') return Position::get($this->data);
+                    }
+                    case 'post':{
+                        if($this->url=='/api/v1/position/leverage') return Position::postLeverage($this->data);
+                    }
+                }
             }
             case 'quote':{
                 break;
@@ -116,30 +117,29 @@ class BitmexServices extends BaseServices
                 break;
             }
             case 'user':{
-                return [
-                    'get'=>[
-                        '/api/v1/user'=>User::get($this->data),
-                        '/api/v1/user/affiliateStatus'=>User::getAffiliateStatus($this->data),
-                        '/api/v1/user/checkReferralCode'=>User::getCheckReferralCode($this->data),
-                        '/api/v1/user/commission'=>User::getCommission($this->data),
-                        '/api/v1/user/depositAddress'=>User::getDepositAddress($this->data),
-                        '/api/v1/user/executionHistory'=>User::getExecutionHistory($this->data),
-                        '/api/v1/user/margin'=>User::getMargin($this->data),
-                        '/api/v1/user/minWithdrawalFee'=>User::getMinWithdrawalFee($this->data),
-                        '/api/v1/user/wallet'=>User::getWallet($this->data),
-                        '/api/v1/user/walletHistory'=>User::getWalletHistory($this->data),
-                        '/api/v1/user/walletSummary'=>User::getWalletSummary($this->data),
-                    ],
-                    'post'=>[
-                        '/api/v1/user/cancelWithdrawal'=>User::postCancelWithdrawal($this->data),
-                        '/api/v1/user/communicationToken'=>User::postCommunicationToken($this->data),
-                        '/api/v1/user/confirmEmail'=>User::postConfirmEmail($this->data),
-                        '/api/v1/user/confirmWithdrawal'=>User::postConfirmWithdrawal($this->data),
-                        '/api/v1/user/logout'=>User::postLogout($this->data),
-                        '/api/v1/user/preferences'=>User::postPreferences($this->data),
-                        '/api/v1/user/requestWithdrawal'=>User::postRequestWithdrawal($this->data),
-                    ],
-                ];
+                switch ($this->method){
+                    case 'get':{
+                        if($this->url=='/api/v1/user') return User::get($this->data);
+                        if($this->url=='/api/v1/user/affiliateStatus') return User::getAffiliateStatus($this->data);
+                        if($this->url=='/api/v1/user/checkReferralCode') return User::getCheckReferralCode($this->data);
+                        if($this->url=='/api/v1/user/commission') return User::getCommission($this->data);
+                        if($this->url=='/api/v1/user/depositAddress') return User::getDepositAddress($this->data);
+                        if($this->url=='/api/v1/user/executionHistory') return User::getExecutionHistory($this->data);
+                        if($this->url=='/api/v1/user/margin') return User::getMargin($this->data);
+                        if($this->url=='/api/v1/user/minWithdrawalFee') return User::getMinWithdrawalFee($this->data);
+                        if($this->url=='/api/v1/user/wallet') return User::getWallet($this->data);
+                        if($this->url=='/api/v1/user/walletHistory') return User::getWalletHistory($this->data);
+                        if($this->url=='/api/v1/user/walletSummary') return User::getWalletSummary($this->data);
+                    }
+                    case 'post':{
+                        if($this->url=='/api/v1/user/cancelWithdrawal') return User::postCancelWithdrawal($this->data);
+                        if($this->url=='/api/v1/user/communicationToken') return User::postCommunicationToken($this->data);
+                        if($this->url=='/api/v1/user/confirmEmail') return User::postConfirmEmail($this->data);
+                        if($this->url=='/api/v1/user/logout') return User::postLogout($this->data);
+                        if($this->url=='/api/v1/user/preferences') return User::postPreferences($this->data);
+                        if($this->url=='/api/v1/user/requestWithdrawal') return User::postRequestWithdrawal($this->data);
+                    }
+                }
             }
             case 'userevent':{
                 break;
@@ -155,8 +155,6 @@ class BitmexServices extends BaseServices
         echo $this->url."\n";
         echo $this->type."\n"; */
         //print_r($this->data);
-        $map=$this->setMap();
-        
-        return (array)$map[$this->method][$this->url];
+        return (array) $this->setMap();
     }
 }
