@@ -16,6 +16,10 @@ class OkexController extends BaseController
     {
         $okex=new OkexServices($request);
         
-        $okex->run();
+        try {
+            return response()->json($okex->run());
+        }catch (\Exception $e){
+            return response($e->getMessage().' line:'.$e->getLine(),503);
+        }
     }
 }

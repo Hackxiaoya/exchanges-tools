@@ -28,8 +28,16 @@ class Orders
     notional	string	Yes	amount bought. (for orders bought at market price only)
     */
     static public function post(array $data=[]){
-        return '/api/spot/v3/orders';
-        $data['margin_trading']=1;
+        $temp='{
+	"client_oid": "",
+	"error_code": "",
+	"error_message": "",
+	"order_id": "2914177357256704",
+	"result": true
+}';
+        $temp=json_decode($temp,true);
+        
+        return $temp;
     }
     
     static public function postBatch(){
@@ -45,11 +53,19 @@ class Orders
         order_id	string	Yes	order ID
      * */
     static public function postCancel(array $data=[]){
-        $id=$data['order_id'] ?? $data['client_oid'];
-        unset($data['order_id']);
-        unset($data['client_oid']);
+        $temp='{
+	"client_oid": "",
+	"error_code": "",
+	"error_message": "",
+	"order_id": "2914240779588609",
+	"result": true
+}';
+        $temp=json_decode($temp,true);
         
-        return '/api/spot/v3/cancel_orders/'.$id;
+        if(isset($data['order_id'])) $temp['order_id']=$data['order_id'];
+        if(isset($data['client_oid'])) $temp['client_oid']=$data['client_oid'];
+        
+        return $temp;
     }
     
     static public function postCancelBatch(array $data=[]){
@@ -82,10 +98,33 @@ class Orders
         client_oid	string	[ required ] The client_oid type should be comprised of alphabets + numbers or only alphabets within 1 – 32 characters， both uppercase and lowercase letters are supported
      * */
     static public function get(array $data=[]){
-        $id=$data['order_id'] ?? $data['client_oid'];
-        unset($data['order_id']);
-        unset($data['client_oid']);
+        $temp='{
+	"client_oid": "",
+	"created_at": "2019-05-30T08:02:06.000Z",
+	"filled_notional": "0",
+	"filled_size": "0",
+	"funds": "",
+	"instrument_id": "BTC-USDT",
+	"notional": "",
+	"order_id": "2914210685519872",
+	"order_type": "0",
+	"price": "100",
+	"price_avg": "0",
+	"product_id": "BTC-USDT",
+	"side": "buy",
+	"size": "0.001",
+	"state": "0",
+	"status": "open",
+	"timestamp": "2019-05-30T08:02:06.000Z",
+	"type": "limit"
+}';
+        $temp=json_decode($temp,true);
         
-        return '/api/spot/v3/orders/'.$id;
+        if(isset($data['client_oid'])) $temp['client_id']=$data['client_oid'];
+        if(isset($data['order_id'])) $temp['order_id']=$data['order_id'];
+        if(isset($data['instrument_id'])) $temp['instrument_id']=$data['instrument_id'];
+        
+        return $temp;
+        
     }
 }
