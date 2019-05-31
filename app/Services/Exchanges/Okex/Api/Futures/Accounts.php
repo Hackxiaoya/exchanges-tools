@@ -10,22 +10,53 @@ class Accounts
 {
     /**
      * Futures Account of all Currency
-     * 
      * */
-    static public function getAll(){
-        'GET';
-        return '/api/futures/v3/order';
+    static public function getAll(array $data=[]){
+        $temp='{
+	"info": {
+		"btc": {
+			"auto_margin": "1",
+			"contracts": [{
+				"available_qty": "0.26827401",
+				"fixed_balance": "0",
+				"instrument_id": "BTC-USD-190628",
+				"margin_for_unfilled": "0.1",
+				"margin_frozen": "0",
+				"realized_pnl": "0",
+				"unrealized_pnl": "0"
+			}],
+			"equity": "0.36827401",
+			"liqui_mode": "legacy",
+			"margin_mode": "fixed",
+			"total_avail_balance": "0.36827401"
+		}
+	}
+}';
+        $temp=json_decode($temp,true);
         
-        $data['leverage']=$data['leverage']??10;
+        return $temp;
     }
     
     static public function get(array $data=[]){
-        'GET';
-        return '';
+        $temp='{
+	"total_avail_balance": "0.36827401",
+	"contracts": [{
+		"available_qty": "0.26827401",
+		"fixed_balance": "0",
+		"instrument_id": "BTC-USD-190628",
+		"margin_for_unfilled": "0.1",
+		"margin_frozen": "0",
+		"realized_pnl": "0",
+		"unrealized_pnl": "0"
+	}],
+	"equity": "0.36827401",
+	"margin_mode": "fixed",
+	"auto_margin": "1",
+	"liqui_mode": "legacy"
+}';
+        $temp=json_decode($temp,true);
         
-        
-        
-        
+        return $temp;
     }
     
     static public function getLeverage(array $data=[]){
@@ -45,10 +76,7 @@ class Accounts
     }
     
     static public function getLedger(array $data=[]){
-        'GET';
-        return '';
-        
-        
+        return [];
     }
     
     static public function getHolds(array $data=[]){

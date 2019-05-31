@@ -8,13 +8,36 @@ namespace App\Services\Exchanges\Okex\Api\Futures;
 
 class Orders
 {
+    static protected $status=[
+        //订单状态(-1.撤单成功；0:等待成交 1:部分成交 2:全部成交 ）
+        '-1',
+        '0',
+        '1',
+        '2',
+    ];
+    
+    /**
+     * 随机订单状态
+     * */
+    static protected function randStatus($data){
+        $data['status']=self::$status[rand(0,3)];
+        
+        return $data;
+    }
+    
     /**
      * */
     static public function post(array $data=[]){
-        'POST';
-        return '/api/futures/v3/order';
+        $temp='{
+	"result": true,
+	"error_message": "",
+	"error_code": "0",
+	"order_id": "2918764476077056"
+}';
         
-        $data['leverage']=$data['leverage']??10;
+        $temp=json_decode($temp,true);
+        
+        return $temp;
     }
     
     static public function postBatch(array $data=[]){
@@ -24,11 +47,18 @@ class Orders
      * 
      * */
     static public function postCancel(array $data=[]){
-        $id=$data['order_id'] ?? $data['client_oid'];
-        unset($data['order_id']);
-        unset($data['client_oid']);
+        $temp='{
+	"result": true,
+	"order_id": "2918861353032704",
+	"instrument_id": "btc-usd-190628"
+}';
         
-        return '/api/futures/v3/cancel_order/'.$data['instrument_id'].'/'.$id;
+        $temp=json_decode($temp,true);
+        
+        if(isset($data['order_id'])) $temp['order_id']=$data['order_id'];
+        if(isset($data['instrument_id'])) $temp['instrument_id']=$data['instrument_id'];
+        
+        return $temp;
     }
     
     static public function postCancelBatch(array $data=[]){
@@ -43,11 +73,36 @@ class Orders
      * 
      * */
     static public function get(array $data=[]){
-        $id=$data['order_id'] ?? $data['client_oid'];
-        unset($data['order_id']);
-        unset($data['client_oid']);
+        $temp='{
+	"instrument_id": "BTC-USD-190628",
+	"size": "1",
+	"timestamp": "2019-05-31T03:22:23.000Z",
+	"filled_qty": "0",
+	"fee": "0",
+	"order_id": "2918773113963520",
+	"price": "100",
+	"price_avg": "0",
+	"status": "0",
+	"state": "0",
+	"type": "1",
+	"contract_val": "100",
+	"leverage": "10",
+	"client_oid": "",
+	"pnl": "0",
+	"order_type": "0"
+}';
         
-        'GET';
-        return '/api/futures/v3/orders/'.$data['instrument_id'].'/'.$id;
+        $temp=json_decode($temp,true);
+
+        if(isset($data['order_id'])) $temp['order_id']=$data['order_id'];
+        if(isset($data['client_oid'])) $temp['client_oid']=$data['order_id'];
+        if(isset($data['instrument_id'])) $temp['instrument_id']=$data['instrument_id'];
+        if(isset($data['type'])) $temp['type']=$data['type'];
+        if(isset($data['price'])) $temp['price']=$data['price'];
+        if(isset($data['size'])) $temp['size']=$data['size'];
+        
+        $temp=self::randStatus($temp);
+        
+        return $temp;
     }
 }
