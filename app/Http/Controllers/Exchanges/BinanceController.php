@@ -15,7 +15,11 @@ class BinanceController extends BaseController
     public function index(Request $request)
     {
         $binance=new BinanceServices($request);
-        
-        $binance->run();
+        //throw new \Exception('aaa');
+        try {
+            return response()->json($binance->run());
+        }catch (\Exception $e){
+            return response($e->getMessage().' line:'.$e->getLine(),503);
+        }
     }
 }
