@@ -16,6 +16,10 @@ class HuobiController extends BaseController
     {
         $huobi=new HuobiServices($request);
         
-        $huobi->run();
+        try {
+            return response()->json($huobi->run());
+        }catch (\Exception $e){
+            return response($e->getMessage().' line:'.$e->getLine(),503);
+        }
     }
 }
