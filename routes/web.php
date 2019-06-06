@@ -20,3 +20,7 @@ Route::any('binance/{path}','Exchanges\BinanceController@index')->where('path', 
 Route::any('okex/{path}','Exchanges\OkexController@index')->where('path', '.*');
 Route::any('huobi/{path}','Exchanges\HuobiController@index')->where('path', '.*');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
