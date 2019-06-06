@@ -29,3 +29,17 @@ id
 api_id  外键
 user_id 外键
 content 存储内容
+
+
+$host='http://exchanges-tools.coin/bitmex/uid';
+
+$host='http://exchanges-tools.coin/binance/uid';
+
+$host='http://exchanges-tools.coin/okex/spot/uid';
+$host='http://exchanges-tools.coin/okex/future/uid';
+
+$host='http://exchanges-tools.coin/huobi/spot/uid';
+$host='http://exchanges-tools.coin/huobi/future/uid';
+
+$exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
+$bitmex=new Bitmex($key,$secret,$host);
