@@ -6,7 +6,7 @@
 namespace App\Services\Exchanges\Okex\Api\Futures;
 
 
-class Instruments
+class Instruments extends Base
 {
     /**
      * Get market data. This endpoint provides the snapshots of market data and can be used without verifications.

@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class Insurance  
+class Insurance   extends Base
 {
     static public  function get(array $data=[]){
         $this->type='GET';

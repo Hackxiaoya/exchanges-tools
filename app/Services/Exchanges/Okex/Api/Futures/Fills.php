@@ -7,7 +7,7 @@ namespace App\Services\Exchanges\Okex\Api\Futures;
 
 
 
-class Fills
+class Fills extends Base
 {
     static public function get(array $data=[]){
         

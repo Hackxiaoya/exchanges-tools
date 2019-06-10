@@ -7,7 +7,7 @@ namespace App\Services\Exchanges\Okex\Api\Futures;
 
 
 
-class Position
+class Position extends Base
 {
     /**
      * Get the information of all holding positions in futures trading.Due to high energy consumption, you are advised to capture data with the "Futures Account of a Currency" API instead.

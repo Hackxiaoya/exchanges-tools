@@ -5,7 +5,7 @@
 
 namespace App\Services\Exchanges\Huobi\Api\Spot;
 
-class Account
+class Account extends Base
 {
     /**
      * 查询当前用户的所有账户(即account-id)

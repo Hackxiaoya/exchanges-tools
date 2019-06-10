@@ -5,7 +5,7 @@
 
 namespace App\Services\Exchanges\Huobi\Api\Spot;
 
-class Dw
+class Dw extends Base
 {
     /**
      * 充提币	POST /v1/dw/withdraw/api/create	POST	申请提币	Y	N

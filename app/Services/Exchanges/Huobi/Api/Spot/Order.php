@@ -5,7 +5,7 @@
 
 namespace App\Services\Exchanges\Huobi\Api\Spot;
 
-class Order
+class Order extends Base
 {
     protected static $status=[
         //submitting , submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销

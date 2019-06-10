@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class Announcement
+class Announcement extends Base
 {
     /**
      * /api/v1/announcement

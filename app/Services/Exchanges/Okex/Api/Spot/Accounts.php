@@ -6,7 +6,7 @@
 namespace App\Services\Exchanges\Okex\Api\Spot;
 
 
-class Accounts 
+class Accounts  extends Base
 {
     /**
      * return '/api/spot/v3/accounts';

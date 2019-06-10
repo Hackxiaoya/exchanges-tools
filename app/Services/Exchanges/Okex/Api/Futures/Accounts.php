@@ -6,7 +6,7 @@
 namespace App\Services\Exchanges\Okex\Api\Futures;
 
 
-class Accounts
+class Accounts extends Base
 {
     /**
      * Futures Account of all Currency

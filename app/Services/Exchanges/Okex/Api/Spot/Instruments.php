@@ -7,7 +7,7 @@ namespace App\Services\Exchanges\Okex\Api\Spot;
 
 
 
-class Instruments 
+class Instruments  extends Base
 {
     /**
      * /api/spot/v3/instruments

@@ -3,7 +3,7 @@ namespace App\Services\Exchanges\Bitmex\Api;
 
 
 
-class ApiKey
+class ApiKey extends Base
 {
     static public function get(){
         return '/api/v1/apiKey';

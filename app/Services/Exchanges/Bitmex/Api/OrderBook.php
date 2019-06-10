@@ -5,7 +5,7 @@
 
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class OrderBook  
+class OrderBook   extends Base
 {
     /**
      * 

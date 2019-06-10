@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class Liquidation  
+class Liquidation   extends Base
 {
     static public  function get($data)
     {

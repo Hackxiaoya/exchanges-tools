@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class Instrument  
+class Instrument   extends Base
 {
     static public  function get(array $data=[]){
         

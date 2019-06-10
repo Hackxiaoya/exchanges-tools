@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class Leaderboard  
+class Leaderboard   extends Base
 {
     static public  function get(array $data=[]){
         $this->type='GET';

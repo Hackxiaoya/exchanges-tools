@@ -5,7 +5,7 @@
 
 namespace App\Services\Exchanges\Huobi\Api\Spot;
 
-class Subuser
+class Subuser extends Base
 {
     /**
      *

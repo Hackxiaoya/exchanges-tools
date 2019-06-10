@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class User  
+class User   extends Base
 {
     static public  function get(array $data=[]){
         'GET';

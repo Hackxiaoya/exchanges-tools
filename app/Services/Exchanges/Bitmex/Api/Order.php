@@ -8,7 +8,7 @@
 
 namespace App\Services\Exchanges\Bitmex\Api;
 
-class Order  
+class Order   extends Base
 {
     static protected $status=[
         'Filled',

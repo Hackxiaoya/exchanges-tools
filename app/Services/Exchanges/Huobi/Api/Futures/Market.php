@@ -4,7 +4,7 @@
  * */
 namespace App\Services\Exchanges\Huobi\Api\Futures;
 
-class Market
+class Market extends Base
 {
     /**
      * 获取行情深度数据

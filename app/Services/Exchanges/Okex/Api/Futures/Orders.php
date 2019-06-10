@@ -6,7 +6,7 @@
 namespace App\Services\Exchanges\Okex\Api\Futures;
 
 
-class Orders
+class Orders extends Base
 {
     static protected $status=[
         //订单状态(-1.撤单成功；0:等待成交 1:部分成交 2:全部成交 ）

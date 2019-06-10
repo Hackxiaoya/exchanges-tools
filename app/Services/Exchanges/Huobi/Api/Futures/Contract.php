@@ -5,7 +5,7 @@
 
 namespace App\Services\Exchanges\Huobi\Api\Futures;
 
-class Contract
+class Contract extends Base
 {
     /**
      * Restful	基础信息接口	api/v1/contract_contract_info	GET	获取合约信息	否
