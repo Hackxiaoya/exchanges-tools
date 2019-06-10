@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**
@@ -23,6 +21,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('index');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function welcome()
+    {
+        return view('welcome');
     }
 }
