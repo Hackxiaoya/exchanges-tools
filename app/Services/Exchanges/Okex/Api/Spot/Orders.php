@@ -9,27 +9,6 @@ namespace App\Services\Exchanges\Okex\Api\Spot;
 
 class Orders  extends Base
 {
-    static protected $status=[
-        //订单状态(all:所有状态 open:未成交 part_filled:部分成交 canceling:撤销中 filled:已成交 cancelled:已撤销 ordering:下单中 failure：下单失败)
-        'all',
-        'open',
-        'ordering',
-        'filled',
-        'part_filled',
-        'canceling',
-        'cancelled',
-        'failure',
-    ];
-    
-    /**
-     * 随机订单状态
-     * */
-    static protected function randStatus($data){
-        $data['status']=self::$status[rand(0,7)];
-        
-        return $data;
-    }
-    
     /**
     Parameters	Parameters Types	Required	Description
     client_oid	string	No	the order ID customized by yourself , The client_oid type should be comprised of alphabets + numbers or only alphabets within 1 – 32 characters， both uppercase and lowercase letters are supported
