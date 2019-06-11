@@ -11,6 +11,6 @@ class BinanceApiSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //\DB::statement("");
     }
 }

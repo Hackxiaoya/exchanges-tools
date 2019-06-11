@@ -11,6 +11,6 @@ class HuobiApiSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //\DB::statement("");
     }
 }
