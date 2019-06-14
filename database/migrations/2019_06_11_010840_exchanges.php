@@ -17,7 +17,7 @@ class Exchanges extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
         }); */
-        \DB::statement("CREATE TABLE `api` (
+        \DB::statement("CREATE TABLE `apis` (
           `id` int(10) NOT NULL AUTO_INCREMENT,
           `platform` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '平台名称如：bitmex,okex',
           `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '平台类型如future,spot',
@@ -30,31 +30,43 @@ class Exchanges extends Migration
           KEY `platform` (`platform`,`type`,`method`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
         
-        \DB::statement("CREATE TABLE `api_data` (
-          `id` int(10) NOT NULL AUTO_INCREMENT,
-          `api_id` int(10) NOT NULL COMMENT '外键',
-          `user_id` int(10) NOT NULL COMMENT '外键',
-          `order_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '冗余自定义ID可以为空',
-          `client_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '冗余自定义ID可以为空',
-          `data` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存储数据josn格式保存',
-          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          PRIMARY KEY (`id`),
-          KEY `api_id` (`api_id`),
-          KEY `user_id` (`user_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+        \DB::statement("CREATE TABLE `user_data` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `api_id` int(10) NOT NULL COMMENT '外键',
+  `user_id` int(10) NOT NULL COMMENT '外键',
+  `user_strategy_id` int(10) DEFAULT '0',
+  `data` json NOT NULL COMMENT '存储数据josn格式保存',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `api_id` (`api_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
         
-        \DB::statement("CREATE TABLE `log` (
-          `id` int(11) NOT NULL AUTO_INCREMENT,
-          `api_id` int(11) NOT NULL,
-          `user_id` int(11) NOT NULL,
-          `data` int(11) NOT NULL COMMENT '日志内容',
-          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          PRIMARY KEY (`id`),
-          KEY `api_id` (`api_id`),
-          KEY `user_id` (`user_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+        \DB::statement("CREATE TABLE `user_data` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `api_id` int(10) NOT NULL COMMENT '外键',
+  `user_id` int(10) NOT NULL COMMENT '外键',
+  `user_strategy_id` int(10) DEFAULT '0',
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存储数据josn格式保存',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `api_id` (`api_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+        
+        \DB::statement("CREATE TABLE `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `api_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `data` json NOT NULL COMMENT '日志内容',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `api_id` (`api_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
     }
 
     /**
@@ -64,8 +76,9 @@ class Exchanges extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('api');
-        Schema::dropIfExists('api_data');
-        Schema::dropIfExists('log');
+        Schema::dropIfExists('apis');
+        Schema::dropIfExists('user_data');
+        Schema::dropIfExists('user_strategies');
+        Schema::dropIfExists('logs');
     }
 }

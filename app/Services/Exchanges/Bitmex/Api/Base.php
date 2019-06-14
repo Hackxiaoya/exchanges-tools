@@ -2,6 +2,15 @@
 namespace App\Services\Exchanges\Bitmex\Api;
 
 class Base{
+    static public $uid;
+    static public $method;
+    static public $url;
+    static public $type;
+    static public $data;
+    
+    /**
+     * 订单状态
+     * */
     static protected $status=[
         'Filled',
         'New',

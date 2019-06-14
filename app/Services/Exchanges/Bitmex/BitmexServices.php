@@ -7,6 +7,7 @@ use App\Services\Exchanges\Bitmex\Api\ApiKey;
 use App\Services\Exchanges\Bitmex\Api\Order;
 use App\Services\Exchanges\Bitmex\Api\Position;
 use App\Services\Exchanges\Bitmex\Api\User;
+use App\Services\Exchanges\Bitmex\Api\Base;
 
 
 class BitmexServices extends BaseServices
@@ -150,11 +151,22 @@ class BitmexServices extends BaseServices
     }
     
     public function run(){
-        /* echo $this->id."\n";
-        echo $this->method."\n";
-        echo $this->url."\n";
-        echo $this->type."\n"; */
-        //print_r($this->data);
+        Base::$uid=$this->id;
+        Base::$method=$this->method;
+        Base::$url=$this->url;
+        Base::$type=$this->type;
+        Base::$data=$this->data;
+        
+        
+        $a=\App\Models\Aaa::where([
+            ['data->orderID', 'like', '069bc5ef-1040-7952-948f-e26ad8673825'],
+        ])->first();
+        
+        //dd($a->data);
+        print_r($a);
+        
+        die('hhh');
+        
         return (array) $this->setMap();
     }
 }

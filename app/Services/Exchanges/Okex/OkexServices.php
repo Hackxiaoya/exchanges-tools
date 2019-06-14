@@ -5,11 +5,13 @@ use App\Services\Exchanges\BaseServices;
 use App\Services\Exchanges\Okex\Api\Spot\Orders;
 use App\Services\Exchanges\Okex\Api\Spot\Instruments;
 use App\Services\Exchanges\Okex\Api\Spot\Accounts;
+use App\Services\Exchanges\Okex\Api\Spot\Base;
 
 use App\Services\Exchanges\Okex\Api\Futures\Position as FuturePosition;
 use App\Services\Exchanges\Okex\Api\Futures\Accounts as FutureAccounts;
 use App\Services\Exchanges\Okex\Api\Futures\Instruments as FutureInstruments;
 use \App\Services\Exchanges\Okex\Api\Futures\Orders as FutureOrders;
+use App\Services\Exchanges\Okex\Api\Spot\Base as FutureBase;
 
 class OkexServices extends BaseServices
 {
@@ -26,6 +28,12 @@ class OkexServices extends BaseServices
     protected function setMap(){
         switch (strtolower($this->type)){
             case 'spot':{
+                Base::$uid=$this->id;
+                Base::$method=$this->method;
+                Base::$url=$this->url;
+                Base::$type=$this->type;
+                Base::$data=$this->data;
+                
                 switch ($this->method){
                     case 'get':{
                         if($this->url=='/api/spot/v3/accounts') return Accounts::getAll($this->data);
@@ -70,6 +78,12 @@ class OkexServices extends BaseServices
                 break;
             }
             case 'future':{
+                FutureBase::$uid=$this->id;
+                FutureBase::$method=$this->method;
+                FutureBase::$url=$this->url;
+                FutureBase::$type=$this->type;
+                FutureBase::$data=$this->data;
+                
                 switch ($this->method){
                     case 'get':{
                         if($this->url=="/api/futures/v3/position") return FuturePosition::getAll($this->data);

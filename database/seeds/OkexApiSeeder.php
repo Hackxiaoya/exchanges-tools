@@ -12,7 +12,7 @@ class OkexApiSeeder extends Seeder
     public function run()
     {
         //spot
-        \DB::statement("INSERT INTO `api` (`id`, `platform`, `type`, `method`, `url`, `data`, `created_at`, `updated_up`) VALUES 
+        \DB::statement("INSERT INTO `apis` (`id`, `platform`, `type`, `method`, `url`, `data`, `created_at`, `updated_up`) VALUES 
 (NULL, 'okex', 'spot', 'get', '/api/spot/v3/accounts', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, 'okex', 'spot', 'get', '/api/spot/v3/accounts/<currency>', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, 'okex', 'spot', 'get', '/api/spot/v3/accounts/<currency>/ledger', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
