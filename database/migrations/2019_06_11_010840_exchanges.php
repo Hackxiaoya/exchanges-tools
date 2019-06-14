@@ -31,42 +31,29 @@ class Exchanges extends Migration
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
         
         \DB::statement("CREATE TABLE `user_data` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `api_id` int(10) NOT NULL COMMENT '外键',
-  `user_id` int(10) NOT NULL COMMENT '外键',
-  `user_strategy_id` int(10) DEFAULT '0',
-  `data` json NOT NULL COMMENT '存储数据josn格式保存',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `api_id` (`api_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
-        
-        \DB::statement("CREATE TABLE `user_data` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `api_id` int(10) NOT NULL COMMENT '外键',
-  `user_id` int(10) NOT NULL COMMENT '外键',
-  `user_strategy_id` int(10) DEFAULT '0',
-  `data` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存储数据josn格式保存',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `api_id` (`api_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+          `id` int(10) NOT NULL AUTO_INCREMENT,
+          `api_id` int(10) NOT NULL COMMENT '外键',
+          `user_id` int(10) NOT NULL COMMENT '外键',
+          `user_strategy_id` int(10) DEFAULT '0',
+          `data` json NOT NULL COMMENT '存储数据josn格式保存',
+          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          PRIMARY KEY (`id`),
+          KEY `api_id` (`api_id`),
+          KEY `user_id` (`user_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
         
         \DB::statement("CREATE TABLE `logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `api_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `data` json NOT NULL COMMENT '日志内容',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `api_id` (`api_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `api_id` int(11) NOT NULL,
+          `user_id` int(11) NOT NULL,
+          `data` json NOT NULL COMMENT '日志内容',
+          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          PRIMARY KEY (`id`),
+          KEY `api_id` (`api_id`),
+          KEY `user_id` (`user_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
     }
 
     /**

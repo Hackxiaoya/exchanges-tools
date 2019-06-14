@@ -157,16 +157,6 @@ class BitmexServices extends BaseServices
         Base::$type=$this->type;
         Base::$data=$this->data;
         
-        
-        $a=\App\Models\Aaa::where([
-            ['data->orderID', 'like', '069bc5ef-1040-7952-948f-e26ad8673825'],
-        ])->first();
-        
-        //dd($a->data);
-        print_r($a);
-        
-        die('hhh');
-        
         return (array) $this->setMap();
     }
 }
