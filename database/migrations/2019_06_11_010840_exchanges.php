@@ -25,7 +25,7 @@ class Exchanges extends Migration
           `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求地址',
           `data` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '镜像数据josn保存',
           `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`id`),
           KEY `platform` (`platform`,`type`,`method`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
@@ -37,7 +37,7 @@ class Exchanges extends Migration
           `user_strategy_id` int(10) DEFAULT '0',
           `data` json NOT NULL COMMENT '存储数据josn格式保存',
           `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`id`),
           KEY `api_id` (`api_id`),
           KEY `user_id` (`user_id`)
@@ -49,7 +49,7 @@ class Exchanges extends Migration
           `user_id` int(11) NOT NULL,
           `data` json NOT NULL COMMENT '日志内容',
           `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          `updated_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`id`),
           KEY `api_id` (`api_id`),
           KEY `user_id` (`user_id`)

@@ -48,19 +48,23 @@ class OkexServices extends BaseServices
                         
                         
                         //api/spot/v3/accounts/<currency>
+                        Base::$url='/api/spot/v3/accounts/<currency>';
                         preg_match('/^\/api\/spot\/v3\/accounts\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return Accounts::get(array_merge($this->data,['currency'=>$match[1]]));
                         
                         //api/spot/v3/accounts/<currency>/ledger
+                        Base::$url='/api/spot/v3/accounts/<currency>/ledger';
                         preg_match('/^\/api\/spot\/v3\/accounts\/([a-zA-Z\d]+)\/ledger$/',$this->url,$match);
                         if(!empty($match)) return Accounts::getLedger(array_merge($this->data,['currency'=>$match[1]]));
                         
                         //api/spot/v3/orders/<order_id>
+                        Base::$url='/api/spot/v3/orders/<order_id>';
                         preg_match('/^\/api\/spot\/v3\/orders\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return Orders::get(array_merge($this->data,['order_id'=>$match[1]]));
                         
                         
                         //api/spot/v3/instruments/<instrument_id>/book
+                        Base::$url='/api/spot/v3/instruments/<instrument_id>/book';
                         preg_match('/^\/api\/spot\/v3\/instruments\/(.*)\/book$/',$this->url,$match);
                         if(!empty($match)) return Instruments::getBook(array_merge($this->data,['instrument_id'=>$match[1]]));
                         
@@ -71,6 +75,7 @@ class OkexServices extends BaseServices
                         if($this->url=='/api/spot/v3/cancel_batch_orders') return [];
                         
                         //api/spot/v3/cancel_orders/<order_id>
+                        Base::$url='/api/spot/v3/cancel_orders/<order_id>';
                         preg_match('/^\/api\/spot\/v3\/cancel_orders\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return Orders::postCancel(array_merge($this->data,['order_id'=>$match[1]]));
                     }
@@ -99,18 +104,22 @@ class OkexServices extends BaseServices
                         if($this->url=="/api/futures/v3/instruments/<instrument_id>/trades") return [];
                         
                         //api/futures/v3/<instrument_id>/position
+                        FutureBase::$url='/api/futures/v3/<instrument_id>/position';
                         preg_match('/^\/api\/futures\/v3\/(.*)\/position$/',$this->url,$match);
                         if(!empty($match)) return FuturePosition::get(array_merge($this->data,['instrument_id'=>$match[1]]));
                         
                         //api/futures/v3/accounts/{currency}
+                        FutureBase::$url='/api/futures/v3/accounts/{currency}';
                         preg_match('/^\/api\/futures\/v3\/accounts\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return FutureAccounts::get(array_merge($this->data,['currency'=>$match[1]]));
                         
                         //api/futures/v3/instruments/<instrument_id>/book
+                        FutureBase::$url='/api/futures/v3/instruments/<instrument_id>/book';
                         preg_match('/^\/api\/futures\/v3\/instruments\/(.*)\/book$/',$this->url,$match);
                         if(!empty($match)) return Instruments::getBook(array_merge($this->data,['instrument_id'=>$match[1]]));
                         
                         ///api/futures/v3/orders/<instrument_id>/<order_id>
+                        FutureBase::$url='/api/futures/v3/orders/<instrument_id>/<order_id>';
                         preg_match('/^\/api\/futures\/v3\/orders\/(.*)\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return FutureOrders::get(array_merge($this->data,['instrument_id'=>$match[1],'order_id'=>$match[2]]));
                         
@@ -126,6 +135,7 @@ class OkexServices extends BaseServices
                         if($this->url=="/api/futures/v3/cancel_all") return [];
                         
                         //api/futures/v3/cancel_order/<instrument_id>/<order_id>
+                        FutureBase::$url='/api/futures/v3/cancel_order/<instrument_id>/<order_id>';
                         preg_match('/^\/api\/futures\/v3\/cancel_order\/(.*)\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return FutureOrders::postCancel(array_merge($this->data,['instrument_id'=>$match[1],'order_id'=>$match[2]]));
                     }

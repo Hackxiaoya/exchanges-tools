@@ -1,12 +1,16 @@
 <?php
 namespace App\Services\Exchanges\Bitmex\Api;
 
+use App\Models\Api;
+
 class Base{
     static public $uid;
     static public $method;
     static public $url;
     static public $type;
     static public $data;
+    
+    static public $mirroring;
     
     /**
      * 订单状态
@@ -68,5 +72,19 @@ class Base{
         }
         
         return $data;
+    }
+    
+    /**
+     * 获取镜像数据
+     * */
+    static protected function getMirroring(){
+        //\DB::connection()->enableQueryLog(); // 开启查询日志
+        self::$mirroring=Api::where('platform','bitmex')
+        ->where('type',self::$type)
+        ->where('method',self::$method)
+        ->where('url',self::$url)
+        ->first();
+        //\DB::getQueryLog(); // 获取查询日志
+        return self::$mirroring;
     }
 }

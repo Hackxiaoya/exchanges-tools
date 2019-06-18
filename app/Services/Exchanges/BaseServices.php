@@ -25,6 +25,10 @@ class BaseServices
         $this->method=strtolower($request->method());
         
         $this->data=$request->all();
+        if(!empty($request->getContent())){
+            parse_str($request->getContent(),$out);
+            $this->data=array_merge($this->data,$out);
+        }
         
         $this->setProtected();
     }
@@ -38,10 +42,12 @@ class BaseServices
         switch (strtolower($temp[0])){
             case 'bitmex':{
                 $this->id=$temp[1];
+                $this->type='future';
                 break;
             }
             case 'binance':{
                 $this->id=$temp[1];
+                $this->type='spot';
                 break;
             }
             case 'huobi':{
