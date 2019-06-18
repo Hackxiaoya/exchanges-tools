@@ -119,13 +119,13 @@ class Order   extends Base
         ->where('user_strategy_id',0);
         
 
-        if(isset($filter['orderID'])){
+        if(isset($data['orderID'])){
             $user_data->where([
                 ['data->orderID', 'like', $data['orderID']??''],
             ]);
         }
         
-        if(isset($filter['clOrdID'])){
+        if(isset($data['clOrdID'])){
             $user_data->where([
                 ['data->clOrdID', 'like', $data['clOrdID']??''],
             ]);
@@ -153,6 +153,8 @@ class Order   extends Base
         
         $temp['orderID']=strtolower(str_random(8).'-'.rand(1000,9999).'-'.rand(1000,9999).'-'.str_random(4).'-'.str_random(12));
         
+        
+        
         UserData::create([
             'api_id'=>self::$mirroring->id,
             'user_id'=>self::$uid,
@@ -173,13 +175,13 @@ class Order   extends Base
         ->where('user_strategy_id',0);
         
         
-        if(isset($filter['orderID'])){
+        if(isset($data['orderID'])){
             $user_data->where([
                 ['data->orderID', 'like', $data['orderID']??''],
             ]);
         }
         
-        if(isset($filter['clOrdID'])){
+        if(isset($data['clOrdID'])){
             $user_data->where([
                 ['data->clOrdID', 'like', $data['clOrdID']??''],
             ]);
