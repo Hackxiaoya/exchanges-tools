@@ -77,23 +77,24 @@ class Order   extends Base
         $user_data=UserData::where('user_id',self::$uid)
         ->where('user_strategy_id',0);
         
-        if(isset($data['symbol'])) {
-            if (isset($data['filter'])){
-                $filter=json_decode($data['filter'],true);
-                
-                if(isset($filter['orderID'])){
-                    $user_data->where([
-                        ['data->orderID', 'like', $filter['orderID']??''],
-                    ]);
-                }
-                
-                if(isset($filter['clOrdID'])){
-                    $user_data->where([
-                        ['data->clOrdID', 'like', $filter['clOrdID']??''],
-                    ]);
-                }
+        
+        if (isset($data['filter'])){
+            $filter=json_decode($data['filter'],true);
+            
+            if(isset($filter['orderID']) && !empty($filter['orderID'])){
+                $user_data->where([
+                    ['data->orderID', 'like', $filter['orderID']??''],
+                ]);
             }
             
+            if(isset($filter['clOrdID']) && !empty($filter['clOrdID'])){
+                $user_data->where([
+                    ['data->clOrdID', 'like', $filter['clOrdID']??''],
+                ]);
+            }
+        }
+            
+        if(isset($data['symbol']) && !empty($data['symbol'])) {
             $user_data->where([
                 ['data->symbol', 'like', $data['symbol']],
             ]);
@@ -119,13 +120,13 @@ class Order   extends Base
         ->where('user_strategy_id',0);
         
 
-        if(isset($data['orderID'])){
+        if(isset($data['orderID'])  && !empty($data['orderID'])){
             $user_data->where([
                 ['data->orderID', 'like', $data['orderID']??''],
             ]);
         }
         
-        if(isset($data['clOrdID'])){
+        if(isset($data['clOrdID'])   && !empty($data['clOrdID'])){
             $user_data->where([
                 ['data->clOrdID', 'like', $data['clOrdID']??''],
             ]);
@@ -175,13 +176,13 @@ class Order   extends Base
         ->where('user_strategy_id',0);
         
         
-        if(isset($data['orderID'])){
+        if(isset($data['orderID'])  && !empty($data['orderID'])){
             $user_data->where([
                 ['data->orderID', 'like', $data['orderID']??''],
             ]);
         }
         
-        if(isset($data['clOrdID'])){
+        if(isset($data['clOrdID']) && !empty($data['clOrdID'])){
             $user_data->where([
                 ['data->clOrdID', 'like', $data['clOrdID']??''],
             ]);
@@ -189,12 +190,12 @@ class Order   extends Base
         
         //查询结果
         $temp=$user_data->first();
-        if(empty($temp)) return [];
+        if(empty($temp)) throw new \Exception('Order does not exist');
         $get_data=json_decode($temp['data'],true);
         
         if(!in_array($get_data['ordStatus'], ['Canceled','Filled','SystemError'])) $get_data['ordStatus']='Canceled';
         
-        return $get_data;
+        return [$get_data];
     }
     
     /**
