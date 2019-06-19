@@ -7,6 +7,8 @@ namespace App\Services\Exchanges\Okex\Api\Spot;
 
 
 
+use App\Models\UserData;
+
 class Orders  extends Base
 {
     /**
@@ -28,14 +30,49 @@ class Orders  extends Base
     notional	string	Yes	amount bought. (for orders bought at market price only)
     */
     static public function post(array $data=[]){
-        $temp='{
+        $mirroring=self::getMirroring();
+        $temp=json_decode($mirroring['data'],true);
+        if(isset($data['client_oid'])) $temp['client_oid']=$data['client_oid'];
+        $temp['order_id']=rand(100000,999999).rand(100000,999999).rand(1000,9999);
+        
+        $test='{
 	"client_oid": "",
-	"error_code": "",
-	"error_message": "",
-	"order_id": "2914177357256704",
-	"result": true
+	"created_at": "2019-05-30T08:02:06.000Z",
+	"filled_notional": "0",
+	"filled_size": "0",
+	"funds": "",
+	"instrument_id": "BTC-USDT",
+	"notional": "",
+	"order_id": "2914210685519872",
+	"order_type": "0",
+	"price": "100",
+	"price_avg": "0",
+	"product_id": "BTC-USDT",
+	"side": "buy",
+	"size": "0.001",
+	"state": "0",
+	"status": "open",
+	"timestamp": "2019-05-30T08:02:06.000Z",
+	"type": "limit"
 }';
-        $temp=json_decode($temp,true);
+        $test=json_decode($test,true);
+        
+        $test['order_id']=$temp['order_id'];
+        $test['client_oid']=$temp['client_oid'];
+        if(isset($data['instrument_id'])) $test['instrument_id']=$data['instrument_id'];
+        if(isset($data['side'])) $test['side']=$data['side'];
+        if(isset($data['price'])) $test['price']=$data['price'];
+        if(isset($data['size'])) $test['size']=$data['size'];
+        if(isset($data['notional'])) $test['notional']=$data['notional'];
+        $test['type']=$data['type']??'limit';
+        $test=self::randStatus($test);
+        
+        UserData::create([
+            'api_id'=>$mirroring->id,
+            'user_id'=>self::$uid,
+            'user_strategy_id'=>0,
+            'data'=>json_encode($test),
+        ]);
         
         return $temp;
     }
@@ -53,17 +90,33 @@ class Orders  extends Base
         order_id	string	Yes	order ID
      * */
     static public function postCancel(array $data=[]){
-        $temp='{
-	"client_oid": "",
-	"error_code": "",
-	"error_message": "",
-	"order_id": "2914240779588609",
-	"result": true
-}';
-        $temp=json_decode($temp,true);
+        $mirroring=self::getMirroring();
+        $temp=json_decode($mirroring['data'],true);
         
-        if(isset($data['order_id'])) $temp['order_id']=$data['order_id'];
-        if(isset($data['client_oid'])) $temp['client_oid']=$data['client_oid'];
+        $user_data=UserData::where('user_id',self::$uid)
+        ->where('user_strategy_id',0);
+        
+        if(isset($data['order_id'])  && !empty($data['order_id'])){
+            $temp['order_id']=$data['order_id'];
+            
+            $user_data->where([
+                ['data->order_id', 'like', $data['order_id']??''],
+            ]);
+        }
+        
+        if(isset($data['client_oid'])   && !empty($data['client_oid'])){
+            $temp['client_oid']=$data['client_oid'];
+            
+            $user_data->where([
+                ['data->client_oid', 'like', $data['client_oid']??''],
+            ]);
+        }
+        $order=$user_data->first();
+        $json=json_decode($order['data'],true);
+        $json['status']='cancelled';
+        
+        $order->data=json_encode($json);
+        $order->save();
         
         return $temp;
     }
@@ -98,38 +151,28 @@ class Orders  extends Base
         client_oid	string	[ required ] The client_oid type should be comprised of alphabets + numbers or only alphabets within 1 – 32 characters， both uppercase and lowercase letters are supported
      * */
     static public function get(array $data=[]){
-        $temp='{
-	"client_oid": "",
-	"created_at": "2019-05-30T08:02:06.000Z",
-	"filled_notional": "0",
-	"filled_size": "0",
-	"funds": "",
-	"instrument_id": "BTC-USDT",
-	"notional": "",
-	"order_id": "2914210685519872",
-	"order_type": "0",
-	"price": "100",
-	"price_avg": "0",
-	"product_id": "BTC-USDT",
-	"side": "buy",
-	"size": "0.001",
-	"state": "0",
-	"status": "open",
-	"timestamp": "2019-05-30T08:02:06.000Z",
-	"type": "limit"
-}';
-        $temp=json_decode($temp,true);
+        $mirroring=self::getMirroring();
+        $temp=json_decode($mirroring['data'],true);
         
-        if(isset($data['client_oid'])) $temp['client_id']=$data['client_oid'];
-        if(isset($data['order_id'])) $temp['order_id']=$data['order_id'];
-        if(isset($data['instrument_id'])) $temp['instrument_id']=$data['instrument_id'];
+        $user_data=UserData::where('user_id',self::$uid)
+        ->where('user_strategy_id',0);
         
-        if(isset($data['side'])) $temp['side']=$data['side'];
-        if(isset($data['price'])) $temp['price']=$data['price'];
-        if(isset($data['size'])) $temp['size']=$data['size'];
         
-        $temp=self::randStatus($temp);
+        if(isset($data['order_id'])  && !empty($data['order_id'])){
+            $user_data->where([
+                ['data->order_id', 'like', $data['order_id']??''],
+            ]);
+        }
         
-        return $temp;
+        if(isset($data['client_oid'])   && !empty($data['client_oid'])){
+            $user_data->where([
+                ['data->client_oid', 'like', $data['client_oid']??''],
+            ]);
+        }
+        
+        //查询结果
+        $temp=$user_data->first();
+        
+        return json_decode($temp['data'],true);
     }
 }

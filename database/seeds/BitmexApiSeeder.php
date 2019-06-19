@@ -11,7 +11,7 @@ class BitmexApiSeeder extends Seeder
      */
     public function run()
     {
-        \DB::statement("INSERT INTO `apis` (`id`, `platform`, `type`, `method`, `url`, `data`, `created_at`, `updated_up`) VALUES 
+        \DB::statement("INSERT INTO `apis` (`id`, `platform`, `type`, `method`, `url`, `data`, `created_at`, `updated_at`) VALUES 
 (NULL, 'bitmex', 'future', 'get', '/api/v1/announcement', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, 'bitmex', 'future', 'get', '/api/v1/announcement/urgent', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, 'bitmex', 'future', 'get', '/api/v1/apiKey', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
