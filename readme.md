@@ -28,7 +28,7 @@ php artisan db:seed
 初始用户:admin 密码:admin
 ```
 
-### 案例
+### 模拟接口
 ```php
 //bitmex
 //定义虚拟测试接口地址
