@@ -19,9 +19,7 @@
 ```
 composer create-project dytf/exchanges-tools:dev-master
 
-进入项目目录，执行以下命令，初始化项目以及数据迁移
-
-请先修改.env文件
+初始化项目以及数据迁移。进入项目目录，修改.env文件设置MySQL数据库，执行以下命令。
 
 php artisan migrate
 
