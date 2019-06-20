@@ -1,45 +1,56 @@
-api所有接口表
-id
-platform varchar 20  平台
-type  varchar 15     future spot 等等   
-method    varchar 15  请求类型
-url    varchar 255 请求地址
-data  test   镜像数据josn保存
-created_at
-updated_up
+### 前言
+这个项目主要用于辅助量化交易进行模拟测试，目前只支持随机性的数据模拟，后期会加入流程性、策略性、行情数据模拟等等。
 
-api_data接口数据表存储
-id
-api_id  外键
-user_id 外键
-order_id  可以为空
-client_id   可以为空
-content 存储数据josn格式保存
+该项目由很多未完善的功能，欢迎大家与我们一起改进它。
 
+### 支持的交易所API
 
-strategy 策略表
-id
-api_id
-user_id 外键
-content 存储数据josn格式保存
+[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
+
+[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/okex-php/tree/master/tests)
+
+[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/huobi-php/tree/master/tests)
+
+[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/binance-php/tree/master/tests)
+
+[Exchanges](https://github.com/zhouaini528/exchanges-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)是以上所有交易所集合成的SDK
+
+### 安装方式
+```
+composer create-project dytf/exchanges-tools:dev-master
 
 
-log 日志表
-id
-api_id  外键
-user_id 外键
-content 存储内容
+//进入项目目录，初始化项目以及数据迁移
+php artisan migrate
 
+php artisan db:seed
+```
 
-$host='http://exchanges-tools.coin/bitmex/uid';
-
-$host='http://exchanges-tools.coin/binance/uid';
-
-$host='http://exchanges-tools.coin/okex/spot/uid';
-$host='http://exchanges-tools.coin/okex/future/uid';
-
-$host='http://exchanges-tools.coin/huobi/spot/uid';
-$host='http://exchanges-tools.coin/huobi/future/uid';
-
+### 案例
+```php
+//定义虚拟测试接口地址
+$host='http://localhost/bitmex/1';
+//支持集成SDK
 $exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
+//支持底层API
 $bitmex=new Bitmex($key,$secret,$host);
+
+```
+
+```php
+//币币交易
+//定义虚拟测试接口地址
+$host='http://localhost/okex/spot/1';
+//支持集成SDK
+$exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
+//支持底层API
+$okex=new OkexSpot($key,$secret,$passphrase,$host);
+
+//合约交易
+//定义虚拟测试接口地址
+$host='http://localhost/okex/future/1';
+//支持集成SDK
+$exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
+//支持底层API
+$okex=new OkexFuture($key,$secret,$passphrase,$host);
+```

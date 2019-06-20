@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "dytf/exchanges-tools",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Simulation data of virtual currency.",
     "keywords": [
         "framework",
         "laravel"
