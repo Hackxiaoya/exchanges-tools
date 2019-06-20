@@ -2,9 +2,12 @@
     "name": "dytf/exchanges-tools",
     "type": "project",
     "description": "Simulation data of virtual currency.",
-    "keywords": [
-        "framework",
-        "laravel"
+    "keywords": ["bitmex", "binance", "okex", "huobi"],
+    "authors": [
+        {
+            "name": "linwenjun",
+            "email": "465382251@qq.com"
+        }
     ],
     "license": "MIT",
     "require": {
