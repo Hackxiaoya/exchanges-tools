@@ -26,6 +26,8 @@ composer create-project dytf/exchanges-tools:dev-master
 php artisan migrate
 
 php artisan db:seed
+
+初始用户:admin 密码:admin
 ```
 
 ### 案例
