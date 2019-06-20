@@ -8,6 +8,7 @@ use App\Services\Exchanges\BaseServices;
 use App\Services\Exchanges\Binance\Api\User;
 use App\Services\Exchanges\Binance\Api\Trade;
 use App\Services\Exchanges\Binance\Api\System;
+use App\Services\Exchanges\Binance\Api\Base;
 
 
 class BinanceServices extends BaseServices
@@ -46,12 +47,12 @@ class BinanceServices extends BaseServices
     }
     
     public function run(){
-        /* echo $this->id."\n";
-        echo $this->method."\n";
-        echo $this->url."\n";
-        echo $this->type."\n";
-        die; */
-        //
+        Base::$uid=$this->id;
+        Base::$method=$this->method;
+        Base::$url=$this->url;
+        Base::$type=$this->type;
+        Base::$data=$this->data;
+        
         $map=(array) $this->setMap();
         return $map;
     }

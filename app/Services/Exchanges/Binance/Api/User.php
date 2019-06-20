@@ -5,6 +5,8 @@
 
 namespace App\Services\Exchanges\Binance\Api;
 
+use App\Models\UserData;
+
 class User  extends Base
 {
     /**
@@ -124,32 +126,29 @@ class User  extends Base
     timestamp	LONG	YES	
      * */
     static public function getOrder(array $data){
-        $temp='{
-	"symbol": "BTCUSDT",
-	"orderId": 413506601,
-	"clientOrderId": "OBlK5RMWGHfbTGbNAsdABa",
-	"price": "2000.00000000",
-	"origQty": "0.01000000",
-	"executedQty": "0.00000000",
-	"cummulativeQuoteQty": "0.00000000",
-	"status": "NEW",
-	"timeInForce": "GTC",
-	"type": "LIMIT",
-	"side": "BUY",
-	"stopPrice": "0.00000000",
-	"icebergQty": "0.00000000",
-	"time": 1559530911762,
-	"updateTime": 1559530911762,
-	"isWorking": true
-}';
+        $user_data=UserData::where('user_id',self::$uid)
+        ->where('user_strategy_id',0);
         
-        $temp=json_decode($temp,true);
+        if(isset($data['symbol'])   && !empty($data['symbol'])){
+            $user_data->where([
+                ['data->symbol', 'like', $data['symbol']??''],
+            ]);
+        }
         
-        if(isset($data['symbol'])) $temp['symbol']=$data['symbol'];
-        if(isset($data['orderId'])) $temp['orderId']=$data['orderId'];
-        if(isset($data['origClientOrderId'])) $temp['origClientOrderId']=$data['origClientOrderId'];
+        if(isset($data['orderId'])  && !empty($data['orderId'])){
+            $user_data->where([
+                ['data->orderId', 'like', $data['orderId']??''],
+            ]);
+        }
         
-        $temp=self::randStatus($temp);
+        if(isset($data['origClientOrderId'])   && !empty($data['origClientOrderId'])){
+            $user_data->where([
+                ['data->origClientOrderId', 'like', $data['origClientOrderId']??''],
+            ]);
+        }
+        
+        $temp=$user_data->first();
+        $temp=json_decode($temp['data'],true);
         
         return $temp;
     }

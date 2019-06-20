@@ -6,6 +6,8 @@
 namespace App\Services\Exchanges\Binance\Api;
 
 
+use App\Models\UserData;
+
 class Trade  extends Base
 {
     /**
@@ -39,30 +41,46 @@ class Trade  extends Base
     
      * */
     static public function postOrder(array $data){
-        $temp='{
-	"symbol": "BTCUSDT",
-	"orderId": 413506601,
-	"clientOrderId": "OBlK5RMWGHfbTGbNAsdABa",
-	"transactTime": 1559530911762,
-	"price": "2000.00000000",
-	"origQty": "0.01000000",
-	"executedQty": "0.00000000",
-	"cummulativeQuoteQty": "0.00000000",
-	"status": "NEW",
-	"timeInForce": "GTC",
-	"type": "LIMIT",
-	"side": "BUY",
-	"fills": []
-}';
-        $temp=json_decode($temp,true);
+        $mirroring=self::getMirroring();
+        $temp=json_decode($mirroring['data'],true);
+        if(isset($data['newClientOrderId'])) $temp['clientOrderId']=$data['newClientOrderId'];
+        else $temp['clientOrderId']=str_random(22);
+        $temp['orderId']=rand(1000,9999).rand(10000,99999);
+        $temp['status']='NEW';
+        //return $temp;
         
-        if(isset($data['symbol'])) $temp['symbol']=$data['symbol'];
-        if(isset($data['side'])) $temp['side']=$data['side'];
-        if(isset($data['type'])) $temp['type']=$data['type'];
-        if(isset($data['quantity'])) $temp['quantity']=$data['quantity'];
-        if(isset($data['price'])) $temp['price']=$data['price'];
-        if(isset($data['timeInForce'])) $temp['timeInForce']=$data['timeInForce'];
-        $temp=self::randStatus($temp);
+        $test='{
+        	"symbol": "BTCUSDT",
+        	"orderId": 413506601,
+        	"clientOrderId": "OBlK5RMWGHfbTGbNAsdABa",
+        	"transactTime": 1559530911762,
+        	"price": "2001.00000000",
+        	"origQty": "0.02000000",
+        	"executedQty": "0.00000000",
+        	"cummulativeQuoteQty": "0.00000000",
+        	"status": "NEW",
+        	"timeInForce": "GTC",
+        	"type": "LIMIT",
+        	"side": "BUY",
+        	"fills": []
+        }';
+        $test=json_decode($test,true);
+        if(isset($data['symbol'])) $test['symbol']=$data['symbol'];
+        if(isset($data['side'])) $test['side']=$data['side'];
+        if(isset($data['type'])) $test['type']=$data['type'];
+        if(isset($data['quantity'])) $test['origQty']=$data['quantity'];
+        if(isset($data['price'])) $test['price']=$data['price'];
+        if(isset($data['timeInForce'])) $test['timeInForce']=$data['timeInForce'];
+        $test['orderId']=$temp['orderId'];
+        $test['clientOrderId']=$temp['clientOrderId'];
+        $test=self::randStatus($test);
+        
+        UserData::create([
+            'api_id'=>$mirroring->id,
+            'user_id'=>self::$uid,
+            'user_strategy_id'=>0,
+            'data'=>json_encode($test),
+        ]);
         
         return $temp;
         
