@@ -19,8 +19,8 @@
 ```
 composer create-project dytf/exchanges-tools:dev-master
 
+进入项目目录，执行以下命令，初始化项目以及数据迁移
 
-//进入项目目录，初始化项目以及数据迁移
 php artisan migrate
 
 php artisan db:seed
@@ -28,6 +28,7 @@ php artisan db:seed
 
 ### 案例
 ```php
+//bitmex
 //定义虚拟测试接口地址
 $host='http://localhost/bitmex/1';
 //支持集成SDK
@@ -38,7 +39,7 @@ $bitmex=new Bitmex($key,$secret,$host);
 ```
 
 ```php
-//币币交易
+//okex币币交易
 //定义虚拟测试接口地址
 $host='http://localhost/okex/spot/1';
 //支持集成SDK
@@ -46,7 +47,7 @@ $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 //支持底层API
 $okex=new OkexSpot($key,$secret,$passphrase,$host);
 
-//合约交易
+//okex合约交易
 //定义虚拟测试接口地址
 $host='http://localhost/okex/future/1';
 //支持集成SDK
