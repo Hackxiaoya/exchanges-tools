@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author lin <465382251@qq.com>
+ * */
 namespace App\Services\Exchanges\Bitmex;
 
 use App\Services\Exchanges\BaseServices;
