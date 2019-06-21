@@ -29,6 +29,13 @@ php artisan db:seed
 ```
 
 ### 模拟接口
+接口说明如：
+http://yourdomain.com/exchanges/uid
+yourdomain.com：是你本地或者线上的域名
+exchanges：对应的平台
+uid:用户id用于一些特殊流程、策略等等自定义设置
+
+#### 接口详细如下
 ```php
 //bitmex
 //定义虚拟测试接口地址
