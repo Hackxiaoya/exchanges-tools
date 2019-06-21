@@ -78,3 +78,21 @@ $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 //支持底层API
 $okex=new OkexFuture($key,$secret,$passphrase,$host);
 ```
+
+```php
+//huobi 币币交易
+//定义虚拟测试接口地址
+$host='http://localhost/huobi/spot/1';
+//支持集成SDK
+$exchanges=new Exchanges('huobi',$key,$secret,$extra,$host);
+//支持底层API
+$huobi=new HuobiSpot($key,$secret,$host);
+
+//huobi 合约交易
+//定义虚拟测试接口地址
+$host='http://localhost/huobi/future/1';
+//支持集成SDK
+$exchanges=new Exchanges('huobi',$key,$secret,$extra,$host);
+//支持底层API
+$huobi=new HuobiSpot($key,$secret,$host);
+```
