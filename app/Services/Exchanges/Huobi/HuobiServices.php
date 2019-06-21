@@ -10,6 +10,8 @@ use App\Services\Exchanges\Huobi\Api\Spot\Account;
 use App\Services\Exchanges\Huobi\Api\Spot\Margin;
 use App\Services\Exchanges\Huobi\Api\Spot\Market;
 use App\Services\Exchanges\Huobi\Api\Spot\Common;
+use App\Services\Exchanges\Huobi\Api\Spot\Base;
+use App\Services\Exchanges\Huobi\Api\Futures\Base as BaseFuture;
 
 
 class HuobiServices extends BaseServices
@@ -27,6 +29,12 @@ class HuobiServices extends BaseServices
     protected function setMap(){
         switch (strtolower($this->type)){
             case 'spot':{
+                Base::$uid=$this->id;
+                Base::$method=$this->method;
+                Base::$url=$this->url;
+                Base::$type=$this->type;
+                Base::$data=$this->data;
+                
                 switch ($this->method){
                     case 'get':{
                         if($this->url=="/market/history/kline") return [];
@@ -54,17 +62,21 @@ class HuobiServices extends BaseServices
                         
                         //GET /v1/account/accounts/{account-id}/balance
                         preg_match('/^\/v1\/account\/accounts\/([\d]+)\/balance$/',$this->url,$match);
+                        Base::$url='/v1/account/accounts/{account-id}/balance';
                         if(!empty($match)) return Account::getBalance(array_merge($this->data,['account-id'=>$match[1]]));
                         
                         //GET /v1/order/orders/{order-id}
+                        Base::$url='/v1/order/orders/{order-id}';
                         preg_match('/^\/v1\/order\/orders\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return Order::get(array_merge($this->data,['order-id'=>$match[1]]));
                         
                         //GET /v1/order/orders/{order-id}/matchresults
+                        Base::$url='/v1/order/orders/{order-id}/matchresults';
                         preg_match('/^\/v1\/order\/orders\/(.*)\/matchresults$/',$this->url,$match);
                         if(!empty($match)) return Order::getMatchresults(array_merge($this->data,['order-id'=>$match[1]]));
                         
                         //GET /v1/account/accounts/{sub-uid}
+                        Base::$url='/v1/account/accounts/{sub-uid}';
                         preg_match('/^\/v1\/account\/accounts\/([a-zA-Z\d]+)$/',$this->url,$match);
                         if(!empty($match)) return Account::getSubuser(array_merge($this->data,['sub-uid'=>$match[1]]));
                     }
@@ -82,14 +94,12 @@ class HuobiServices extends BaseServices
                         
                         
                         //POST /v1/order/orders/{order-id}/submitcancel
+                        Base::$url='/v1/order/orders/{order-id}/submitcancel';
                         preg_match('/^\/v1\/order\/orders\/(.*)\/submitcancel$/',$this->url,$match);
                         if(!empty($match)) return Order::postSubmitCancel(array_merge($this->data,['order-id'=>$match[1]]));
                         
-                        //POST /v1/dw/withdraw-virtual/{withdraw-id}/cancel
-                        //preg_match('/^\/v1\/dw\/withdraw-virtual\/{withdraw-id}\/cancel$/',$this->url,$match);
-                        //if(!empty($match)) return (array_merge($this->data,['withdraw-id'=>$match[1]]));
-                        
                         //POST /v1/margin/orders/{order-id}/repay
+                        Base::$url='/v1/margin/orders/{order-id}/repay';
                         preg_match('/^\/v1\/margin\/orders\/(.*)\/repay$/',$this->url,$match);
                         if(!empty($match)) return Margin::postOrdersRepay(array_merge($this->data,['order-id'=>$match[1]]));
                     }
@@ -97,7 +107,11 @@ class HuobiServices extends BaseServices
                 break;
             }
             case 'future':{
-                
+                BaseFuture::$uid=$this->id;
+                BaseFuture::$method=$this->method;
+                BaseFuture::$url=$this->url;
+                BaseFuture::$type=$this->type;
+                BaseFuture::$data=$this->data;
                 break;
             }
         }

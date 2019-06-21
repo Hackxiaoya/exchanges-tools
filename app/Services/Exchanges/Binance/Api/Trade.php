@@ -50,12 +50,12 @@ class Trade  extends Base
         //return $temp;
         
         $test='{
-        	"symbol": "BTCUSDT",
-        	"orderId": 413506601,
-        	"clientOrderId": "OBlK5RMWGHfbTGbNAsdABa",
+        	"symbol": "",
+        	"orderId": "",
+        	"clientOrderId": "",
         	"transactTime": 1559530911762,
-        	"price": "2001.00000000",
-        	"origQty": "0.02000000",
+        	"price": "0",
+        	"origQty": "0",
         	"executedQty": "0.00000000",
         	"cummulativeQuoteQty": "0.00000000",
         	"status": "NEW",

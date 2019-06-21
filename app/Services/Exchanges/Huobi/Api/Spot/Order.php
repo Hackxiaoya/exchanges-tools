@@ -5,21 +5,55 @@
 
 namespace App\Services\Exchanges\Huobi\Api\Spot;
 
+use App\Models\UserData;
+
 class Order extends Base
 {
     /**
      *
      * */
     static public function postPlace(array $data=[]){
-        $temp='{
-	"status": "ok",
-	"data": "35804833872"
-}';
+        $mirroring=self::getMirroring();
+        $temp=json_decode($mirroring['data'],true);
+        $temp['data']=rand(100000,999999).rand(10000,99999);
         
-        $temp=json_decode($temp,true);
+        $test='{
+	"status": "ok",
+	"data": {
+		"id": 35804833872,
+		"symbol": "btcusdt",
+		"account-id": 5720968,
+		"amount": "0.001000000000000000",
+		"price": "100.000000000000000000",
+		"created-at": 1559614845313,
+		"type": "buy-limit",
+		"field-amount": "0.0",
+		"field-cash-amount": "0.0",
+		"field-fees": "0.0",
+		"finished-at": 0,
+		"source": "spot-api",
+		"state": "submitted",
+		"canceled-at": 0
+	}
+}';
+        $test=json_decode($test,true);
+        
+        if(isset($data['symbol'])) $test['data']['symbol']=$data['symbol'];
+        if(isset($data['type'])) $test['data']['type']=$data['type'];
+        if(isset($data['amount'])) $test['data']['amount']=$data['amount'];
+        if(isset($data['price'])) $test['data']['price']=$data['price'];
+        $test['data']['id']=$temp['data'];
+        
+        $test=self::randStatus($test);
+        
+        UserData::create([
+            'api_id'=>$mirroring->id,
+            'user_id'=>self::$uid,
+            'user_strategy_id'=>0,
+            'data'=>json_encode($test),
+        ]);
         
         return $temp;
-        
     }
     
     /**
@@ -57,33 +91,23 @@ class Order extends Base
      * 用户订单信息	GET /v1/order/orders/{order-id}	GET	根据order-id查询订单详情	Y	Y
      * */
     static public function get(array $data=[]){
-        $temp='{
-	"status": "ok",
-	"data": {
-		"id": 35804833872,
-		"symbol": "btcusdt",
-		"account-id": 5720968,
-		"amount": "0.001000000000000000",
-		"price": "100.000000000000000000",
-		"created-at": 1559614845313,
-		"type": "buy-limit",
-		"field-amount": "0.0",
-		"field-cash-amount": "0.0",
-		"field-fees": "0.0",
-		"finished-at": 0,
-		"source": "spot-api",
-		"state": "submitted",
-		"canceled-at": 0
-	}
-}';
-        $temp=json_decode($temp,true);
+        $mirroring=self::getMirroring();
+        $temp=json_decode($mirroring['data'],true);
         
-        if(isset($data['symbol'])) $temp['data']['symbol']=$data['symbol'];
-        if(isset($data['type'])) $temp['data']['type']=$data['type'];
-        if(isset($data['amount'])) $temp['data']['amount']=$data['amount'];
-        if(isset($data['price'])) $temp['data']['price']=$data['price'];
+        $user_data=UserData::where('user_id',self::$uid)
+        ->where('user_strategy_id',0);
         
-        $temp['data']['state']=self::randStatus();
+        
+        if(isset($data['order-id'])  && !empty($data['order-id'])){
+            $user_data->where([
+                ['data->data->id', 'like', $data['order-id']??''],
+            ]);
+        }
+        
+        //查询结果
+        $temp=$user_data->first();
+        
+        return json_decode($temp['data'],true);
         
         return $temp;
     }
