@@ -29,14 +29,13 @@ php artisan db:seed
 ```
 
 ### 模拟接口
-接口说明如：
-http://yourdomain.com/exchanges/uid
+接口说明如：http://yourdomain.com/exchanges/uid
 
 yourdomain.com：是你本地或者线上的域名
 
-exchanges：对应的平台
+exchanges：对应的平台如：bitmex、binance、okex、huobi
 
-uid:用户id用于一些特殊流程、策略等等自定义设置
+uid:用户id用于一些特殊流程、策略等等自定义设置。
 
 
 #### 接口详细如下
@@ -48,6 +47,17 @@ $host='http://localhost/bitmex/1';
 $exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
 //支持底层API
 $bitmex=new Bitmex($key,$secret,$host);
+
+```
+
+```php
+//binance
+//定义虚拟测试接口地址
+$host='http://localhost/binacne/1';
+//支持集成SDK
+$exchanges=new Exchanges('binacne',$key,$secret,$extra,$host);
+//支持底层API
+$binance=new Binance($key,$secret,$host);
 
 ```
 
