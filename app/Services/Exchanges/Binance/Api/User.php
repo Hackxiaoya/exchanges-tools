@@ -143,7 +143,7 @@ class User  extends Base
         
         if(isset($data['origClientOrderId'])   && !empty($data['origClientOrderId'])){
             $user_data->where([
-                ['data->origClientOrderId', 'like', $data['origClientOrderId']??''],
+                ['data->clientOrderId', 'like', $data['origClientOrderId']??''],
             ]);
         }
         
