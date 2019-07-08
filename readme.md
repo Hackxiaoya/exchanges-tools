@@ -44,7 +44,7 @@ uid:用户id用于一些特殊流程、策略等等自定义设置。
 //定义虚拟测试接口地址
 $host='http://localhost/bitmex/1';
 //支持集成SDK
-$exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
+$exchanges=new Exchanges('bitmex',$key,$secret,$host);
 //支持底层API
 $bitmex=new Bitmex($key,$secret,$host);
 
@@ -55,7 +55,7 @@ $bitmex=new Bitmex($key,$secret,$host);
 //定义虚拟测试接口地址
 $host='http://localhost/binacne/1';
 //支持集成SDK
-$exchanges=new Exchanges('binacne',$key,$secret,$extra,$host);
+$exchanges=new Exchanges('binacne',$key,$secret,$host);
 //支持底层API
 $binance=new Binance($key,$secret,$host);
 
